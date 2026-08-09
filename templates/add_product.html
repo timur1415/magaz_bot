@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить тариф | VOID VPN</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:#1f1f1f;
+            color:white;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .container{
+            width:100%;
+            max-width:500px;
+            padding:40px;
+            border:1px solid rgba(255,255,255,.15);
+            background:#252525;
+            border-radius:15px;
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:30px;
+            letter-spacing:3px;
+        }
+
+        form{
+            display:flex;
+            flex-direction:column;
+            gap:15px;
+        }
+
+        input{
+            padding:15px;
+            border:none;
+            border-radius:10px;
+            background:#333;
+            color:white;
+            font-size:16px;
+        }
+
+        input::placeholder{
+            color:#aaa;
+        }
+
+        button{
+            padding:15px;
+            border:none;
+            border-radius:10px;
+            background:white;
+            color:black;
+            font-weight:bold;
+            cursor:pointer;
+            transition:.3s;
+        }
+
+        button:hover{
+            opacity:.85;
+        }
+
+        .back{
+            display:block;
+            text-align:center;
+            margin-top:20px;
+            color:white;
+            text-decoration:none;
+        }
+
+        .back:hover{
+            text-decoration:underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>VOID VPN</h1>
+
+    <form action="/create_product" method="post" enctype="multipart/form-data">
+
+        <input type="text"
+               name="title"
+               placeholder="Название тарифа"
+               required>
+
+        <input type="number"
+               name="price"
+               placeholder="Цена"
+               required>
+
+        <input type="text"
+               name="description"
+               placeholder="Описание"
+               required>
+
+        <input type="file"
+               name="photo"
+               required>
+
+        <button type="submit">
+            Добавить тариф
+        </button>
+
+    </form>
+
+    <a href="/products" class="back">
+        ← Вернуться к тарифам
+    </a>
+
+</div>
+
+</body>
+</html>

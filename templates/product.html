@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карточка товара | Atelier Noir</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:"Trebuchet MS",sans-serif;
+            min-height:100vh;
+            background:
+                radial-gradient(circle at top, rgba(198, 164, 116, .16), transparent 24%),
+                linear-gradient(145deg, #101114, #1b1a18 58%, #141418);
+            color:#f8f2e9;
+            padding:28px 20px 60px;
+        }
+
+        .page{
+            max-width:1140px;
+            margin:0 auto;
+        }
+
+        .back{
+            display:inline-flex;
+            text-decoration:none;
+            color:#f8f2e9;
+            padding:12px 18px;
+            border-radius:999px;
+            border:1px solid rgba(248, 242, 233, .14);
+            background:rgba(255,255,255,.04);
+            margin-bottom:24px;
+        }
+
+        .layout{
+            display:grid;
+            grid-template-columns:minmax(320px, 1.05fr) minmax(280px, .95fr);
+            gap:28px;
+        }
+
+        .photo,
+        .info{
+            border-radius:30px;
+            overflow:hidden;
+            border:1px solid rgba(248, 242, 233, .12);
+            background:rgba(255,255,255,.04);
+            box-shadow:0 22px 55px rgba(0,0,0,.22);
+        }
+
+        .photo img{
+            width:100%;
+            height:100%;
+            min-height:680px;
+            object-fit:cover;
+            display:block;
+        }
+
+        .info{
+            padding:34px;
+            display:flex;
+            flex-direction:column;
+            gap:24px;
+            justify-content:space-between;
+        }
+
+        .eyebrow{
+            color:#d8b98f;
+            text-transform:uppercase;
+            letter-spacing:.2em;
+            font-size:.75rem;
+        }
+
+        h1{
+            font-family:Georgia,serif;
+            font-size:clamp(2.7rem, 5vw, 4rem);
+            font-weight:400;
+            line-height:1;
+            margin:14px 0 16px;
+        }
+
+        .price{
+            color:#f0dfc9;
+            font-size:2rem;
+            margin-bottom:18px;
+        }
+
+        .description{
+            color:#c9c0b5;
+            line-height:1.8;
+        }
+
+        .specs{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:14px;
+        }
+
+        .spec{
+            padding:16px;
+            border-radius:20px;
+            border:1px solid rgba(248, 242, 233, .08);
+            background:rgba(10,10,12,.22);
+        }
+
+        .spec span{
+            display:block;
+            color:#c9c0b5;
+            font-size:.76rem;
+            text-transform:uppercase;
+            letter-spacing:.14em;
+            margin-bottom:8px;
+        }
+
+        .actions{
+            display:flex;
+            gap:12px;
+            flex-wrap:wrap;
+        }
+
+        .actions a{
+            text-decoration:none;
+            padding:14px 20px;
+            border-radius:999px;
+        }
+
+        .actions .primary{
+            background:#f0dfc9;
+            color:#171514;
+            font-weight:700;
+        }
+
+        .actions .secondary{
+            color:#f8f2e9;
+            border:1px solid rgba(248, 242, 233, .14);
+            background:rgba(255,255,255,.03);
+        }
+
+        .state{
+            min-height:60vh;
+            display:grid;
+            place-items:center;
+            text-align:center;
+            color:#c9c0b5;
+            line-height:1.7;
+        }
+
+        @media(max-width:900px){
+            .layout{
+                grid-template-columns:1fr;
+            }
+
+            .photo img{
+                min-height:420px;
+            }
+        }
+
+        @media(max-width:640px){
+            .info{
+                padding:24px;
+            }
+
+            .specs{
+                grid-template-columns:1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <a href="/products" class="back">← Назад в каталог</a>
+        <div id="product-card" class="state">Загрузка товара...</div>
+    </div>
+    <script>
+        const productId = window.location.pathname.split('/').pop();
+        const productCard = document.getElementById('product-card');
+
+        async function fetchProduct(productId) {
+            try {
+                const response = await fetch(`/api/products/${productId}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const product = await response.json();
+
+                const title = product.title || product.name || 'Без названия';
+                const description = product.description || product.desription || 'Описание пока не добавлено.';
+                const photo = product.photo || '';
+
+                productCard.className = 'layout';
+                productCard.innerHTML = `
+                    <div class="photo">
+                        <img src="${photo}" alt="${title}">
+                    </div>
+
+                    <div class="info">
+                        <div>
+                            <div class="eyebrow">Atelier Noir</div>
+                            <h1>${title}</h1>
+                            <p class="price">${product.price} ₽</p>
+                            <p class="description">${description}</p>
+                        </div>
+
+                        <div class="specs">
+                            <div class="spec">
+                                <span>Категория</span>
+                                Повседневная одежда
+                            </div>
+                            <div class="spec">
+                                <span>Стиль</span>
+                                Городской premium casual
+                            </div>
+                            <div class="spec">
+                                <span>Посадка</span>
+                                Комфортный современный крой
+                            </div>
+                            <div class="spec">
+                                <span>Образ</span>
+                                Легко сочетать с базовым гардеробом
+                            </div>
+                        </div>
+
+                        <div class="actions">
+                            <a href="/products" class="primary">Вернуться к покупкам</a>
+                            <a href="/add_product" class="secondary">Добавить похожий товар</a>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                productCard.innerHTML = 'Не удалось загрузить товар. Вернись в каталог и попробуй снова.';
+            }
+        }
+
+        fetchProduct(productId);
+    </script>
+</body>
+</html>
