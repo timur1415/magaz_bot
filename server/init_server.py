@@ -1,21 +1,14 @@
 import shutil
-from fastapi import FastAPI, Request, Response, status, UploadFile, File, Form
-from fastapi.responses import JSONResponse, RedirectResponse
 from contextlib import asynccontextmanager
-from fastapi.templating import Jinja2Templates
+
+from fastapi import FastAPI, File, Form, Request, Response, UploadFile, status
+from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-
-from db.db import init_db
-
-
+from fastapi.templating import Jinja2Templates
 from telegram import Update
 
-from tg_bot.init_bot import init_bot
-
-from config.config import WEBHOOK_URL
-
-from db.product_crud import create_product, get_all_products, get_product
-
+from db.db import init_db
+from db.product_crud import create_product, get_all_products
 from server.routers.products import router as products_router
 
 

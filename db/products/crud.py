@@ -1,8 +1,9 @@
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from db.products.model import Product
-from db.products.schema import ProductCreate
-from db.products.schema import ProductUpdate
+from db.products.schema import ProductCreate, ProductUpdate
+
 
 async def get_all(session: AsyncSession):
     cursor = await session.execute(select(Product))
