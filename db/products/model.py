@@ -9,3 +9,5 @@ class Product(Base):
     price=Column(Integer)
     photo=Column(String)
     description=Column(String)
+
+

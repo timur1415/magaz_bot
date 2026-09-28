@@ -187,8 +187,8 @@
                 }
                 const product = await response.json();
 
-                const title = product.title || product.name || 'Без названия';
-                const description = product.description || product.desription || 'Описание пока не добавлено.';
+                const title =  product.name || 'Без названия';
+                const description = product.description || 'Описание пока не добавлено.';
                 const photo = product.photo || '';
 
                 productCard.className = 'layout';

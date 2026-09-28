@@ -462,8 +462,8 @@ fetch('/api/products')
 
     data.forEach(product => {
 
-        const title = product.title || product.name || 'Без названия';
-        const description = product.description || product.desription || 'Описание появится после добавления товара.';
+        const title = product.name || 'Без названия';
+        const description = product.description  || 'Описание появится после добавления товара.';
 
         const card =
             document.createElement('a');

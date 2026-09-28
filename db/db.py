@@ -1,11 +1,14 @@
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
-from sqlalchemy.orm import sessionmaker
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import AsyncGenerator
 
-from db.products.model import Product  # noqa: F401
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.orm import sessionmaker
 
 from db.base import Base
+from db.cart_items.models import CartItem  # noqa: F401
+from db.carts.model import Cart  # noqa: F401
+from db.products.model import Product  # noqa: F401
+from db.users.model import User  # noqa: F401
 
 #'sqlite+aiosqlite://user:password@host:port/db'
 engine = create_async_engine('sqlite+aiosqlite:///magaz.db', echo=True)
