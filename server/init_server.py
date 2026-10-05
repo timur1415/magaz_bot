@@ -9,6 +9,7 @@ from telegram import Update
 
 from db.db import init_db
 from db.product_crud import create_product, get_all_products
+from server.routers.cart_middleware import router as cart_middleware_router
 from server.routers.products import router as products_router
 
 
@@ -17,6 +18,7 @@ def init_server():
     app.mount("/static", StaticFiles(directory="static"), name="static")
     templates = Jinja2Templates("templates")
     app.include_router(products_router, prefix="/api")
+    app.include_router(cart_middleware_router)
     
 
     @app.get("/")
@@ -96,6 +98,7 @@ def init_server():
             
             },
         )
+    
 
     return app
 

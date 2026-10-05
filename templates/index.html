@@ -358,6 +358,13 @@ header{
 }
 
 </style>
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const response = await fetch('/api/cart/get-uuid', {credentials: 'include'});
+        const data = await response.json();
+        console.log(data.cart_id);
+    })
+</script>
 </head>
 <body>
 
