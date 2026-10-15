@@ -1,6 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 from uuid import UUID
-class CreateCart(BaseModel):
+class CartCreate(BaseModel):
     user_id: int | None = None
     anonymous_id: UUID | None = None
 

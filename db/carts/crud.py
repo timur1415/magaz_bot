@@ -1,8 +1,9 @@
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
 
 from db.carts.model import Cart
-from db.carts.schema import CartCreate, CartUpdate
+from db.carts.schema import CartCreate, GetCart
+
 
 async def cart_create(session: AsyncSession, data: CartCreate):
     cart = Cart(**data.dict())
@@ -11,6 +12,26 @@ async def cart_create(session: AsyncSession, data: CartCreate):
     await session.refresh(cart)
     return cart
 
-async def cart_get(session: AsyncSession, cart: Cart, data: CartUpdate):
-    
+async def cart_get(session: AsyncSession, cart: Cart, data: GetCart):
+    for field, value in data.dict(exclude_unset=True).items():
+        setattr(cart, field, value)
+    session.add(cart)
+    await session.commit()
+    await session.refresh(cart)
+    return cart
+
+
+async def get_or_create_cart_by_anonymous_id(session: AsyncSession, anonymous_id):
+    result = await session.execute(
+        select(Cart).where(Cart.anonymous_id == anonymous_id)
+    )
+    cart = result.scalars().first()
+    if not cart:
+        cart = Cart(anonymous_id=anonymous_id)
+        session.add(cart)
+        await session.commit()
+        await session.refresh(cart)
+    return cart
+
+
 

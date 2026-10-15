@@ -4,9 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Atelier Noir | Магазин одежды</title>
+<title>Swamp Acid Store | Магазин одежды</title>
 
 <style>
+
+:root{
+    --swamp-950:#0f1408;
+    --swamp-900:#171f0d;
+    --swamp-850:#1c270d;
+    --swamp-800:#243111;
+    --swamp-700:#34501a;
+    --acid:#c9ff31;
+    --purple:#8d3dff;
+    --purple-soft:#c092ff;
+    --text:#f7ffe8;
+    --muted:#cad7ae;
+    --line:rgba(201, 255, 49, .18);
+    --line-strong:rgba(192, 146, 255, .28);
+    --glow:0 22px 60px rgba(80, 10, 150, .24);
+}
 
 *{
     margin:0;
@@ -15,12 +31,32 @@
     font-family:"Trebuchet MS",sans-serif;
 }
 
+html{
+    scroll-behavior:smooth;
+}
+
 body{
-    background:
-        radial-gradient(circle at top left, rgba(198, 164, 116, .18), transparent 26%),
-        linear-gradient(135deg, #111214 0%, #17181d 45%, #1f1a17 100%);
-    color:#f8f2e9;
     min-height:100vh;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 10% 15%, rgba(141, 61, 255, .28), transparent 20%),
+        radial-gradient(circle at 82% 18%, rgba(201, 255, 49, .16), transparent 18%),
+        radial-gradient(circle at 50% 85%, rgba(82, 124, 18, .24), transparent 26%),
+        linear-gradient(135deg, var(--swamp-950) 0%, var(--swamp-900) 34%, #1f290f 65%, #11170b 100%);
+    position:relative;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+        linear-gradient(rgba(201, 255, 49, .04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(141, 61, 255, .04) 1px, transparent 1px);
+    background-size:44px 44px;
+    mask-image:linear-gradient(180deg, rgba(0,0,0,.45), transparent 88%);
 }
 
 header,
@@ -38,11 +74,12 @@ header{
 }
 
 .logo{
-    font-family:Georgia,serif;
-    font-size:1.35rem;
-    font-weight:bold;
-    letter-spacing:4px;
+    font-size:1.2rem;
+    font-weight:700;
+    letter-spacing:.34em;
     text-transform:uppercase;
+    color:var(--acid);
+    text-shadow:0 0 20px rgba(201, 255, 49, .18);
 }
 
 .nav{
@@ -52,74 +89,87 @@ header{
 }
 
 .nav a{
-    color:rgba(248, 242, 233, .78);
+    color:var(--text);
     text-decoration:none;
     padding:10px 16px;
-    border:1px solid rgba(248, 242, 233, .1);
+    border:1px solid var(--line-strong);
     border-radius:999px;
-    background:rgba(255,255,255,.03);
+    background:rgba(141, 61, 255, .10);
+    box-shadow:0 0 0 1px rgba(201, 255, 49, .06) inset;
     transition:.25s ease;
 }
 
-.nav a:hover{
-    color:#fff;
-    border-color:rgba(248, 242, 233, .28);
+.nav a:hover,
+.hero-actions a:hover,
+.add-btn:hover,
+.card:hover{
+    transform:translateY(-3px);
 }
 
 .hero{
-    min-height:85vh;
+    min-height:88vh;
     display:flex;
     justify-content:space-between;
     align-items:flex-end;
     gap:40px;
-    padding:30px 8% 70px;
+    padding:24px 8% 72px;
 }
 
 .hero-copy{
     align-self:flex-start;
-    max-width:760px;
+    max-width:780px;
 }
 
 .badge{
-    display:inline-block;
-    margin-bottom:24px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
     padding:10px 16px;
     border-radius:999px;
-    border:1px solid rgba(248, 242, 233, .14);
-    background:rgba(255,255,255,.04);
-    color:#d8b98f;
+    border:1px solid var(--line);
+    background:rgba(201, 255, 49, .08);
+    color:var(--acid);
     font-size:.76rem;
     text-transform:uppercase;
     letter-spacing:.2em;
 }
 
+.badge::before,
+.eyebrow::before{
+    content:"";
+    width:34px;
+    height:1px;
+    background:linear-gradient(90deg, var(--acid), var(--purple-soft));
+}
+
 .hero h1{
-    font-family:Georgia,serif;
-    font-size:clamp(4.4rem, 11vw, 8.6rem);
-    font-weight:400;
-    line-height:.88;
+    font-size:clamp(3.8rem, 10vw, 8.4rem);
+    font-weight:700;
+    line-height:.86;
     letter-spacing:-.06em;
     display:flex;
     flex-direction:column;
 }
 
 .hero h1 .your{
-    margin-left:min(17vw, 180px);
-    color:#d8b98f;
+    margin-left:min(16vw, 170px);
+    color:var(--acid);
 }
 
 .hero h1 .vibe{
-    margin-left:min(32vw, 330px);
+    margin-left:min(31vw, 320px);
     color:transparent;
-    -webkit-text-stroke:1px rgba(248, 242, 233, .48);
+    -webkit-text-stroke:1px rgba(192, 146, 255, .85);
+    text-shadow:0 0 30px rgba(141, 61, 255, .18);
 }
 
 .hero p{
-    margin-top:28px;
-    color:#c9c0b5;
-    font-size:1.1rem;
-    line-height:1.8;
-    max-width:520px;
+    margin-top:26px;
+    color:var(--muted);
+    font-size:1.08rem;
+    line-height:1.9;
+    max-width:560px;
 }
 
 .hero-actions{
@@ -129,45 +179,47 @@ header{
     flex-wrap:wrap;
 }
 
-.hero-actions a{
+.hero-actions a,
+.add-btn{
     text-decoration:none;
     padding:14px 22px;
     border-radius:999px;
     transition:.25s ease;
 }
 
-.hero-actions .primary{
-    background:#f0dfc9;
-    color:#171514;
+.hero-actions .primary,
+.add-btn{
+    background:linear-gradient(135deg, var(--acid), #97d516);
+    color:#162009;
     font-weight:700;
+    box-shadow:0 18px 36px rgba(128, 184, 26, .20);
 }
 
 .hero-actions .secondary{
-    border:1px solid rgba(248, 242, 233, .16);
-    color:#f8f2e9;
-    background:rgba(255,255,255,.03);
+    border:1px solid var(--line-strong);
+    color:var(--text);
+    background:rgba(141, 61, 255, .12);
 }
 
 .hero-panel{
-    width:min(380px,100%);
-    padding:26px;
-    border-radius:28px;
-    border:1px solid rgba(248, 242, 233, .12);
-    background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-    box-shadow:0 24px 60px rgba(0,0,0,.24);
+    width:min(410px,100%);
+    padding:28px;
+    border-radius:30px;
+    border:1px solid var(--line);
+    background:linear-gradient(180deg, rgba(24, 35, 12, .92), rgba(16, 22, 10, .95));
+    box-shadow:var(--glow);
 }
 
 .hero-panel span{
-    color:#d8b98f;
+    color:var(--purple-soft);
     font-size:.75rem;
     text-transform:uppercase;
     letter-spacing:.18em;
 }
 
 .hero-panel h2{
-    font-family:Georgia,serif;
     font-size:2rem;
-    font-weight:400;
+    font-weight:700;
     margin:14px 0 10px;
 }
 
@@ -187,41 +239,45 @@ header{
 .hero-stats div{
     padding:14px;
     border-radius:18px;
-    background:rgba(8,8,10,.26);
-    border:1px solid rgba(248, 242, 233, .08);
+    background:linear-gradient(180deg, rgba(141, 61, 255, .10), rgba(43, 62, 16, .44));
+    border:1px solid rgba(192, 146, 255, .14);
 }
 
 .hero-stats strong{
     display:block;
     font-size:1.1rem;
     margin-bottom:6px;
+    color:var(--acid);
 }
 
 .hero-stats small{
-    color:#c9c0b5;
-    line-height:1.4;
+    color:var(--muted);
+    line-height:1.5;
 }
 
 .products{
-    padding:90px 8% 110px;
+    padding:90px 8% 120px;
 }
 
 .products-head{
     display:flex;
     justify-content:space-between;
     align-items:flex-end;
-    gap:20px;
+    gap:22px;
     margin-bottom:36px;
 }
 
 .products-copy{
-    max-width:420px;
-    color:#c9c0b5;
-    line-height:1.7;
+    max-width:430px;
+    color:var(--muted);
+    line-height:1.8;
 }
 
 .eyebrow{
-    color:#d8b98f;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    color:var(--purple-soft);
     text-transform:uppercase;
     letter-spacing:.18em;
     font-size:.75rem;
@@ -229,83 +285,136 @@ header{
 }
 
 .products h2{
-    font-family:Georgia,serif;
     font-size:clamp(2.8rem, 7vw, 5.2rem);
-    font-weight:400;
+    font-weight:700;
+    line-height:.92;
 }
 
 #products{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
     gap:26px;
 }
 
 .card{
-    border:1px solid rgba(248, 242, 233, .12);
-    border-radius:28px;
+    border:1px solid var(--line);
+    border-radius:30px;
     overflow:hidden;
     cursor:pointer;
-    transition:.3s ease;
+    transition:.28s ease;
     text-decoration:none;
-    color:#f8f2e9;
-    background:rgba(255,255,255,.04);
-    box-shadow:0 18px 40px rgba(0,0,0,.18);
+    color:var(--text);
+    background:linear-gradient(180deg, rgba(24, 34, 12, .92), rgba(14, 19, 9, .95));
+    box-shadow:var(--glow);
+    position:relative;
+}
+
+.card::after{
+    content:"";
+    position:absolute;
+    inset:auto 18px 18px 18px;
+    height:1px;
+    background:linear-gradient(90deg, rgba(201, 255, 49, 0), rgba(201, 255, 49, .42), rgba(141, 61, 255, 0));
 }
 
 .card:hover{
-    transform:translateY(-10px);
-    border-color:rgba(240, 223, 201, .45);
+    border-color:rgba(192, 146, 255, .38);
+}
+
+.card img,
+.card-media-empty{
+    width:100%;
+    height:360px;
+    display:block;
 }
 
 .card img{
-    width:100%;
-    height:360px;
     object-fit:cover;
+}
+
+.card-media-empty{
+    display:grid;
+    place-items:center;
+    text-align:center;
+    padding:24px;
+    background:
+        radial-gradient(circle at center, rgba(201, 255, 49, .18), transparent 36%),
+        linear-gradient(135deg, rgba(141, 61, 255, .22), rgba(52, 80, 26, .52));
+    color:var(--text);
+}
+
+.card-media-empty strong{
     display:block;
+    margin-bottom:8px;
+    color:var(--acid);
+    text-transform:uppercase;
+    letter-spacing:.16em;
+    font-size:.82rem;
 }
 
 .card-content{
     padding:22px;
 }
 
+.card-label{
+    display:inline-flex;
+    margin-bottom:12px;
+    padding:7px 12px;
+    border-radius:999px;
+    background:rgba(141, 61, 255, .12);
+    border:1px solid rgba(192, 146, 255, .16);
+    color:var(--purple-soft);
+    text-transform:uppercase;
+    font-size:.72rem;
+    letter-spacing:.16em;
+}
+
 .card h3{
     margin-bottom:10px;
-    font-family:Georgia,serif;
-    font-size:1.45rem;
-    font-weight:400;
+    font-size:1.55rem;
+    line-height:1.02;
+    font-weight:700;
 }
 
 .price{
-    color:#f0dfc9;
+    color:var(--acid);
     margin-bottom:12px;
+    font-size:1.08rem;
+    font-weight:700;
 }
 
 .card-text{
-    color:#c9c0b5;
-    line-height:1.6;
+    color:var(--muted);
+    line-height:1.65;
     font-size:.95rem;
+    margin-bottom:16px;
+}
+
+.card-meta{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    font-size:.82rem;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.12em;
+}
+
+.empty-state{
+    padding:36px;
+    border-radius:28px;
+    border:1px dashed rgba(201, 255, 49, .24);
+    color:var(--muted);
+    line-height:1.8;
+    background:rgba(18, 27, 10, .72);
 }
 
 .add-btn{
     position:fixed;
     bottom:30px;
     right:30px;
-    background:#f0dfc9;
-    color:#171514;
-    text-decoration:none;
-    padding:15px 25px;
-    border-radius:999px;
-    font-weight:bold;
-    box-shadow:0 18px 40px rgba(0,0,0,.28);
-}
-
-.empty-state{
-    padding:34px;
-    border-radius:28px;
-    border:1px dashed rgba(248, 242, 233, .18);
-    color:#c9c0b5;
-    line-height:1.7;
-    background:rgba(255,255,255,.03);
+    box-shadow:0 20px 40px rgba(128, 184, 26, .24);
+    z-index:2;
 }
 
 @media(max-width:900px){
@@ -319,18 +428,19 @@ header{
     .hero{
         flex-direction:column;
         align-items:flex-start;
+        min-height:auto;
     }
 
     .hero h1{
-        font-size:clamp(3.4rem, 18vw, 5.6rem);
+        font-size:clamp(3.2rem, 18vw, 5.6rem);
     }
 
     .hero h1 .your{
-        margin-left:80px;
+        margin-left:72px;
     }
 
     .hero h1 .vibe{
-        margin-left:160px;
+        margin-left:140px;
     }
 
     .products-head,
@@ -355,6 +465,11 @@ header{
         text-align:center;
         bottom:20px;
     }
+
+    .card img,
+    .card-media-empty{
+        height:300px;
+    }
 }
 
 </style>
@@ -369,10 +484,10 @@ header{
 <body>
 
 <header>
-    <div class="logo">Atelier Noir</div>
+    <div class="logo">Swamp Acid</div>
 
     <nav class="nav">
-        <a href="#collection">Коллекция</a>
+        <a href="#collection">Дроп</a>
         <a href="#products">Каталог</a>
         <a href="/add_product">Добавить товар</a>
     </nav>
@@ -381,43 +496,43 @@ header{
 <section class="hero">
 
     <div class="hero-copy">
-        <div class="badge">New Season Drop</div>
+        <div class="badge">Acid Bog Capsule</div>
 
         <h1>
-            <span>FIND</span>
+            <span>BUILD</span>
             <span class="your">YOUR</span>
-            <span class="vibe">STYLE</span>
+            <span class="vibe">LOOK</span>
         </h1>
 
         <p>
-            Одежда для тех, кто любит чистый силуэт, комфортную посадку и вещи, которые легко собрать в сильный повседневный образ.
+            Каталог тянется из базы через существующий API, а визуально теперь живет в кислотно-болотной палитре: ядовитый лайм, глубокий мох и фиолетовые вспышки.
         </p>
 
         <div class="hero-actions">
-            <a class="primary" href="#products">Смотреть каталог</a>
-            <a class="secondary" href="/add_product">Добавить новую вещь</a>
+            <a class="primary" href="#products">Открыть каталог</a>
+            <a class="secondary" href="/add_product">Залить новую вещь</a>
         </div>
     </div>
 
     <div class="hero-panel" id="collection">
-        <span>Capsule Edit</span>
-        <h2>Городская коллекция</h2>
+        <span>Live from database</span>
+        <h2>Каталог на живых данных</h2>
         <p>
-            Пальто, рубашки, худи, деним и базовые слои в спокойной палитре, чтобы каждая вещь сочеталась с остальными.
+            Карточки ниже формируются из того, что уже лежит в БД: фото, название, цена и описание берутся из API без ручной подстановки в шаблон.
         </p>
 
         <div class="hero-stats">
             <div>
-                <strong>24h</strong>
-                <small>быстрая обработка заказа</small>
+                <strong>API</strong>
+                <small>товары летят из /api/products</small>
             </div>
             <div>
-                <strong>Weekly</strong>
-                <small>обновление каталога</small>
+                <strong>Live</strong>
+                <small>карточки обновляются по данным базы</small>
             </div>
             <div>
-                <strong>XS-XL</strong>
-                <small>базовая размерная сетка</small>
+                <strong>Style</strong>
+                <small>болото, кислота и фиолет</small>
             </div>
         </div>
     </div>
@@ -428,12 +543,12 @@ header{
 
     <div class="products-head">
         <div>
-            <div class="eyebrow">Selected Pieces</div>
+            <div class="eyebrow">Selected from db</div>
             <h2>Каталог одежды</h2>
         </div>
 
         <div class="products-copy">
-            Товары ниже, как и раньше, загружаются через твой REST API. Я изменил только текст, оформление и отображение карточек.
+            Все карточки ниже строятся на клиенте из ответов API. Я сохранил текущую механику бэкенда и поменял только представление, чтобы страница выглядела цельно с карточкой товара.
         </div>
     </div>
 
@@ -447,62 +562,119 @@ header{
 
 <script>
 
+const productsRoot = document.getElementById('products');
+
+const escapeHtml = (value) => String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+
+const normalizePhotoPath = (photo) => {
+    if (!photo) {
+        return '';
+    }
+    const normalizedPhoto = String(photo).trim();
+    if (/^https?:\/\//i.test(normalizedPhoto) || normalizedPhoto.startsWith('/')) {
+        return normalizedPhoto;
+    }
+    if (normalizedPhoto.startsWith('static/')) {
+        return `/${normalizedPhoto}`;
+    }
+    if (normalizedPhoto.startsWith('uploads/')) {
+        return `/static/${normalizedPhoto}`;
+    }
+    if (!normalizedPhoto.includes('/')) {
+        return `/static/uploads/${normalizedPhoto}`;
+    }
+    return `/${normalizedPhoto}`;
+};
+
+const formatPrice = (value) => {
+    const numericPrice = Number(value);
+    if (!Number.isFinite(numericPrice)) {
+        return 'Цена не указана';
+    }
+    return `${new Intl.NumberFormat('ru-RU').format(numericPrice)} ₽`;
+};
+
 const renderEmptyState = () => {
-    document.getElementById('products').innerHTML = `
+    productsRoot.innerHTML = `
         <div class="empty-state">
-            В каталоге пока нет одежды. Добавь первую позицию через кнопку внизу, и она появится здесь автоматически.
+            В каталоге пока нет товаров. Добавь первую позицию, и она сразу появится здесь из базы через существующий API.
         </div>
     `;
 };
 
-fetch('/api/products')
-.then(response => response.json())
-.then(data => {
+const buildMissingPhotoMarkup = () => `
+    <div class="card-media-empty">
+        <div>
+            <strong>no photo</strong>
+            Для этой позиции в базе пока нет изображения.
+        </div>
+    </div>
+`;
 
-    const productsDiv =
-        document.getElementById('products');
+const renderProductCard = (product) => {
+    const title = escapeHtml(product.name || 'Без названия');
+    const description = escapeHtml(product.description || 'Описание появится после добавления товара.');
+    const shortDescription = description.length > 120 ? `${description.slice(0, 117)}...` : description;
+    const photo = normalizePhotoPath(product.photo);
+    const price = formatPrice(product.price);
 
-    if (!Array.isArray(data) || data.length === 0) {
-        renderEmptyState();
-        return;
+    const card = document.createElement('a');
+    card.href = `/product/${product.id}`;
+    card.classList.add('card');
+
+    card.innerHTML = `
+        ${photo ? `<img src="${escapeHtml(photo)}" alt="${title}">` : buildMissingPhotoMarkup()}
+
+        <div class="card-content">
+            <div class="card-label">db item</div>
+
+            <h3>${title}</h3>
+
+            <p class="price">
+                ${price}
+            </p>
+
+            <p class="card-text">
+                ${shortDescription}
+            </p>
+
+            <div class="card-meta">
+                <span>ID ${escapeHtml(product.id || '—')}</span>
+                <span>${photo ? 'есть фото' : 'без фото'}</span>
+            </div>
+        </div>
+    `;
+
+    const image = card.querySelector('img');
+    if (image) {
+        image.addEventListener('error', () => {
+            image.insertAdjacentHTML('afterend', buildMissingPhotoMarkup());
+            image.remove();
+        }, {once:true});
     }
 
-    data.forEach(product => {
+    productsRoot.appendChild(card);
+};
 
-        const title = product.name || 'Без названия';
-        const description = product.description  || 'Описание появится после добавления товара.';
+fetch('/api/products')
+    .then(response => response.json())
+    .then(data => {
+        if (!Array.isArray(data) || data.length === 0) {
+            renderEmptyState();
+            return;
+        }
 
-        const card =
-            document.createElement('a');
-
-        card.href =
-            `/product/${product.id}`;
-
-        card.classList.add('card');
-
-        card.innerHTML = `
-            <img src="${product.photo}" alt="${title}">
-
-            <div class="card-content">
-                <h3>${title}</h3>
-
-                <p class="price">
-                    ${product.price} ₽
-                </p>
-
-                <p class="card-text">
-                    ${description}
-                </p>
-            </div>
-        `;
-
-        productsDiv.appendChild(card);
+        productsRoot.innerHTML = '';
+        data.forEach(renderProductCard);
+    })
+    .catch(() => {
+        renderEmptyState();
     });
-
-})
-.catch(() => {
-    renderEmptyState();
-});
 
 </script>
 
