@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Корзина</title>
+    <style>
+        :root {
+            --bg-1: #0f1408;
+            --bg-2: #171f0d;
+            --bg-3: #1f290f;
+            --acid: #c9ff31;
+            --purple: #8d3dff;
+            --purple-soft: #c092ff;
+            --text: #f7ffe8;
+            --muted: #cad7ae;
+            --panel: rgba(16, 22, 12, 0.8);
+            --line: rgba(201, 255, 49, 0.18);
+            --line-strong: rgba(192, 146, 255, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Trebuchet MS", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 10% 15%, rgba(141, 61, 255, .28), transparent 20%),
+                radial-gradient(circle at 82% 18%, rgba(201, 255, 49, .16), transparent 18%),
+                radial-gradient(circle at 50% 85%, rgba(82, 124, 18, .24), transparent 26%),
+                linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 34%, var(--bg-3) 65%, #11170b 100%);
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 40px auto;
+            padding: 24px;
+        }
+
+        h1 {
+            margin-bottom: 24px;
+            color: var(--acid);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .cart-list {
+            display: grid;
+            gap: 18px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 18px;
+            background: rgba(17, 23, 11, 0.7);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+        }
+
+        .cart-item img {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid var(--line-strong);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-info h2 {
+            margin: 0 0 10px;
+            font-size: 24px;
+            color: var(--acid);
+        }
+
+        .cart-item-info p {
+            margin: 8px 0;
+            line-height: 1.5;
+            color: var(--text);
+        }
+
+        .empty {
+            background: rgba(17, 23, 11, 0.7);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Корзина</h1>
+        <div id="cart" class="cart-list"></div>
+    </div>
+
+    <script>
+        async function loadCart() {
+            const cartContainer = document.getElementById("cart");
+
+            try {
+                const response = await fetch("/api/cart", { credentials: "include" });
+                const items = await response.json();
+
+                if (!Array.isArray(items) || items.length === 0) {
+                    cartContainer.innerHTML = "<div class='empty'>Корзина пуста</div>";
+                    return;
+                }
+
+                cartContainer.innerHTML = items
+                    .map(item => {
+                        const name = item.name ?? "Без названия";
+                        const description = item.description ?? "Описание отсутствует";
+                        const quantity = item.quantity ?? 1;
+                        const price = item.price ?? 0;
+                        const photo = item.photo || "";
+
+                        return `
+                            <div class="cart-item">
+                                <img src="${photo}" alt="${name}">
+                                <div class="cart-item-info">
+                                    <h2>${name}</h2>
+                                    <p><strong>Описание:</strong> ${description}</p>
+                                    <p><strong>Количество:</strong> ${quantity}</p>
+                                    <p><strong>Цена:</strong> ${price} ₽</p>
+                                </div>
+                            </div>
+                        `;
+                    })
+                    .join("");
+
+            } catch (error) {
+                cartContainer.innerHTML = "<div class='empty'>Не удалось загрузить корзину</div>";
+                console.error(error);
+            }
+        }
+
+        loadCart();
+    </script>
+</body>
+</html>

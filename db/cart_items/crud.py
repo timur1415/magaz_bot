@@ -17,7 +17,6 @@ async def cart_item_create(session: AsyncSession, cart_id: int, product_id: int)
     if item:
         item.quantity += 1
         await session.commit()
-        await session.refresh(item)
         return item
 
     else:
@@ -31,10 +30,10 @@ async def cart_item_create(session: AsyncSession, cart_id: int, product_id: int)
         await session.refresh(new_item)
         return new_item
 
-async def get_cart_item(session: AsyncSession, data: CartItemGet):
-    result = await session.get(CartItem, data.id)
-    
-    return result
+async def get_all_item(session: AsyncSession):
+    result = await session.execute(select(CartItem))
+    items = result.scalars().all()
+    return items
 
 
 
