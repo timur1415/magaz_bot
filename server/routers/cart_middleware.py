@@ -3,7 +3,6 @@ import uuid
 from fastapi import APIRouter, Request, Response
 
 from db.cart_items.crud import cart_item_create
-from db.cart_items.shema import CartItemCreate
 from db.carts.crud import get_or_create_cart_by_anonymous_id
 from server.deps import SessionDep
 
@@ -37,10 +36,9 @@ async def add_to_cart(
 
     item = await cart_item_create(
         session,
-        CartItemCreate(
-            cart_id=cart.id,
-            product_id=product_id,
-            quantity=1,
-        )
+        cart.id,
+        product_id,
     )
-    return {'status': 'success'}
+    print(f'item {item.quantity} !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+
+    return {"status": "success", }
