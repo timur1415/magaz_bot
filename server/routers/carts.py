@@ -1,13 +1,10 @@
 import uuid
 
 from fastapi import APIRouter, Request
-from sqlalchemy import select
 
-from db.cart_items.model import CartItem
-from db.carts.crud import get_or_create_cart_by_anonymous_id
-from db.products.model import Product
-from server.deps import SessionDep
 from db.cart_items.crud import get_all_items_by_id
+from db.carts.crud import get_or_create_cart_by_anonymous_id
+from server.deps import SessionDep
 
 router = APIRouter(tags=["carts"])
 

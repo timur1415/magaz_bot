@@ -9,3 +9,6 @@ class GetCart(BaseModel):
     id: int 
     anonymous_id: UUID
     user_id: int
+
+class DeliteCart(BaseModel):
+    anonymous_id: UUID

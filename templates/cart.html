@@ -133,9 +133,32 @@
             outline-offset: 3px;
         }
 
+        .clear-button {
+            border: 1px solid var(--purple-soft);
+            border-radius: 999px;
+            padding: 14px 32px;
+            margin-right: 12px;
+            background: transparent;
+            color: var(--purple-soft);
+            font: inherit;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .clear-button:hover {
+            transform: translateY(-2px);
+            background: rgba(141, 61, 255, 0.18);
+        }
+
         @media (max-width: 600px) {
-            .buy-button {
+            .buy-button, .clear-button {
                 width: 100%;
+                margin: 0 0 10px;
+            }
+            .cart-actions {
+                flex-direction: column;
             }
         }
     </style>
@@ -145,6 +168,7 @@
         <h1>Корзина</h1>
         <div id="cart" class="cart-list"></div>
         <div id="cart-actions" class="cart-actions" hidden>
+            <button type="button" class="clear-button" onclick="deleteCart()">Удалить корзину</button>
             <a class="buy-button" href="/order">Купить</a>
         </div>
     </div>
@@ -190,6 +214,27 @@
             } catch (error) {
                 cartContainer.innerHTML = "<div class='empty'>Не удалось загрузить корзину</div>";
                 console.error(error);
+            }
+        }
+
+        async function deleteCart() {
+            if (!confirm("Удалить все товары из корзины?")) return;
+
+            try {
+                const response = await fetch("/api/carts/delete", {
+                    method: "POST",
+                    credentials: "include",
+                });
+                const result = await response.json();
+
+                if (result.error) {
+                    alert("Не удалось удалить корзину: " + result.error);
+                    return;
+                }
+                loadCart();
+            } catch (error) {
+                console.error(error);
+                alert("Ошибка при удалении корзины");
             }
         }
 

@@ -1,8 +1,10 @@
+from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
+from db.cart_items.model import CartItem
 from db.carts.model import Cart
-from db.carts.schema import CartCreate, GetCart
+from db.carts.schema import CartCreate, GetCart, DeliteCart
 
 
 async def cart_create(session: AsyncSession, data: CartCreate):
@@ -31,6 +33,17 @@ async def get_or_create_cart_by_anonymous_id(session: AsyncSession, anonymous_id
         session.add(cart)
         await session.commit()
         await session.refresh(cart)
+    return cart
+
+async def delite_cart(session: AsyncSession, data: DeliteCart):
+    result = await session.execute(
+        select(Cart).where(Cart.anonymous_id == data.anonymous_id)
+    )
+    cart = result.scalars().first()
+    if cart:
+        await session.execute(delete(CartItem).where(CartItem.cart_id == cart.id))
+        await session.delete(cart)
+        await session.commit()
     return cart
 
 

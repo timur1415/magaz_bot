@@ -1,6 +1,7 @@
-from db.order_items.models import OrderItem
-from db.order_items.shema import OrderItemCreate, OrderItemGet
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from db.order_items.model import OrderItem
+from db.order_items.shema import OrderItemCreate, OrderItemGet
 
 
 async def create_order_item(session: AsyncSession, data: OrderItemCreate):

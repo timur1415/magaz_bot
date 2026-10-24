@@ -1,8 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
 
 from db.orders.model import Order
 from db.orders.shema import OrderCreate, OrderGet
+
 
 async def create_order(session: AsyncSession, data: OrderCreate):
     order = Order(**data.dict())
