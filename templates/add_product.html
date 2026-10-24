@@ -125,13 +125,13 @@
     <script>
         const form = document.getElementById('add-product-form');
 
-        form.addEventListener('submit', (event)=>{
+        form.addEventListener('submit', async (event)=>{
             event.preventDefault();
             const formData = new FormData(form);
-            fetch('/api/products',{
+            const result = await fetch('/api/products',{
                 method:'POST',
                 body: formData
-            }).then().then().catch()
+            })
         });
     </script>
 </body>

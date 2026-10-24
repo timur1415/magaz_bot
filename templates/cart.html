@@ -96,17 +96,63 @@
             text-align: center;
             color: var(--muted);
         }
+
+        .cart-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+
+        .cart-actions[hidden] {
+            display: none;
+        }
+
+        .buy-button {
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            border: 0;
+            border-radius: 999px;
+            padding: 14px 32px;
+            background: var(--acid);
+            color: var(--bg-1);
+            font: inherit;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .buy-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(201, 255, 49, 0.24);
+        }
+
+        .buy-button:focus-visible {
+            outline: 2px solid var(--purple-soft);
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 600px) {
+            .buy-button {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Корзина</h1>
         <div id="cart" class="cart-list"></div>
+        <div id="cart-actions" class="cart-actions" hidden>
+            <a class="buy-button" href="/order">Купить</a>
+        </div>
     </div>
 
     <script>
         async function loadCart() {
             const cartContainer = document.getElementById("cart");
+            const cartActions = document.getElementById("cart-actions");
 
             try {
                 const response = await fetch("/api/cart", { credentials: "include" });
@@ -114,9 +160,11 @@
 
                 if (!Array.isArray(items) || items.length === 0) {
                     cartContainer.innerHTML = "<div class='empty'>Корзина пуста</div>";
+                    cartActions.hidden = true;
                     return;
                 }
 
+                cartActions.hidden = false;
                 cartContainer.innerHTML = items
                     .map(item => {
                         const name = item.name ?? "Без названия";

@@ -10,8 +10,9 @@ from telegram import Update
 from db.db import init_db
 from db.product_crud import create_product, get_all_products
 from server.routers.cart_middleware import router as cart_middleware_router
-from server.routers.products import router as products_router
 from server.routers.carts import router as carts_router
+from server.routers.order_router import router as order_router
+from server.routers.products import router as products_router
 
 
 def init_server():
@@ -21,6 +22,7 @@ def init_server():
     app.include_router(products_router, prefix="/api")
     app.include_router(carts_router)
     app.include_router(cart_middleware_router)
+    app.include_router(order_router, prefix="/api")
     
 
     @app.get("/")
@@ -106,6 +108,26 @@ def init_server():
         return templates.TemplateResponse(
             request,
             "cart.html",
+            {
+                "request": request,
+            },
+        )
+
+    @app.post('/order')
+    async def order(request: Request):
+            return templates.TemplateResponse(
+                request,
+                "order.html",
+                {
+                    "request": request,
+                },
+            )
+
+    @app.get('/order')
+    async def order_page(request: Request):
+        return templates.TemplateResponse(
+            request,
+            "order.html",
             {
                 "request": request,
             },

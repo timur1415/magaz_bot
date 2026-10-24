@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформление заказа</title>
+    <style>
+        :root {
+            --bg-1: #0f1408;
+            --bg-2: #171f0d;
+            --bg-3: #1f290f;
+            --acid: #c9ff31;
+            --purple-soft: #c092ff;
+            --text: #f7ffe8;
+            --muted: #cad7ae;
+            --line: rgba(201, 255, 49, 0.18);
+            --line-strong: rgba(192, 146, 255, 0.4);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Trebuchet MS", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 10% 15%, rgba(141, 61, 255, .28), transparent 20%),
+                radial-gradient(circle at 82% 18%, rgba(201, 255, 49, .16), transparent 18%),
+                linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 34%, var(--bg-3) 65%, #11170b 100%);
+        }
+
+        .container {
+            max-width: 560px;
+            margin: 40px auto;
+            padding: 24px;
+        }
+
+        h1 {
+            margin-bottom: 24px;
+            color: var(--acid);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--purple-soft);
+            text-decoration: none;
+        }
+
+        form {
+            display: grid;
+            gap: 18px;
+            background: rgba(17, 23, 11, 0.7);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        label {
+            display: grid;
+            gap: 8px;
+            color: var(--muted);
+        }
+
+        input {
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--line-strong);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            font: inherit;
+        }
+
+        input:focus {
+            outline: 2px solid var(--acid);
+            outline-offset: 1px;
+        }
+
+        .pay-button {
+            border: 0;
+            border-radius: 999px;
+            padding: 14px 32px;
+            background: var(--acid);
+            color: var(--bg-1);
+            font: inherit;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .status {
+            margin: 0;
+            min-height: 1.2em;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a class="back" href="/cart">← Назад в корзину</a>
+        <h1>Оформление заказа</h1>
+        <form id="order-form">
+            <label>
+                Ваше имя
+                <input type="text" name="name" placeholder="Иван Иванов" autocomplete="name" required>
+            </label>
+            <label>
+                Номер телефона для связи
+                <input type="tel" name="phone" placeholder="+7 900 000-00-00"
+                       autocomplete="tel" required pattern="[+]?[0-9\s()\-]{10,18}">
+            </label>
+            <label>
+                Адрес доставки
+                <input type="text" name="address" placeholder="Город, улица, дом, квартира"
+                       autocomplete="street-address" required minlength="5">
+            </label>
+            <button class="pay-button" type="submit">Оплатить</button>
+            <p id="status" class="status"></p>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById("order-form");
+
+        form.addEventListener("submit", async event => {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const result = await fetch('/api/orders', {
+                method: 'POST',
+                credentials: 'include',
+                body: formData
+            });
+            
+        });
+    </script>
+</body>
+</html>

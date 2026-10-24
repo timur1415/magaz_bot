@@ -5,8 +5,10 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from sqlalchemy.orm import sessionmaker
 
 from db.base import Base
-from db.cart_items.models import CartItem  # noqa: F401
+from db.cart_items.model import CartItem  # noqa: F401
 from db.carts.model import Cart  # noqa: F401
+from db.order_items.model import OrderItem  # noqa: F401
+from db.orders.model import Order  # noqa: F401
 from db.products.model import Product  # noqa: F401
 from db.users.model import User  # noqa: F401
 

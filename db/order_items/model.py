@@ -1,10 +1,12 @@
-from db.base import Base
-from sqlalchemy import Column, Integer,String
+from sqlalchemy import Column, Integer
 
-class CartItem(Base):
-    __tablename__ = 'cart_items'
+from db.base import Base
+
+
+class OrderItem(Base):
+    __tablename__ = 'order_items'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    cart_id = Column(Integer, nullable=True)
+    order_id = Column(Integer, nullable=True)
     product_id = Column(Integer, nullable=True)
     quantity = Column(Integer, nullable=True)
