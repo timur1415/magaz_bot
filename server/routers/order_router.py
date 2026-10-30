@@ -3,7 +3,8 @@ import uuid
 from fastapi import APIRouter, Form, Request
 
 from db.cart_items.crud import get_all_items_by_id
-from db.carts.crud import get_or_create_cart_by_anonymous_id
+from db.carts.crud import delete_cart, get_or_create_cart_by_anonymous_id
+from db.carts.schema import DeleteCart
 from db.order_items.crud import create_order_item
 from db.order_items.shema import OrderItemCreate
 from db.orders.crud import create_order
@@ -38,3 +39,5 @@ async def create_order_route(
                 quantity=row.quantity,
             ),
         )
+    await delete_cart(session, DeleteCart(anonymous_id=uuid.UUID(cart_uuid)))
+    return {"order_id": order.id}

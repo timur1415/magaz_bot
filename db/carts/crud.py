@@ -4,7 +4,7 @@ from sqlalchemy.future import select
 
 from db.cart_items.model import CartItem
 from db.carts.model import Cart
-from db.carts.schema import CartCreate, GetCart, DeliteCart
+from db.carts.schema import CartCreate, DeleteCart, GetCart
 
 
 async def cart_create(session: AsyncSession, data: CartCreate):
@@ -35,7 +35,7 @@ async def get_or_create_cart_by_anonymous_id(session: AsyncSession, anonymous_id
         await session.refresh(cart)
     return cart
 
-async def delite_cart(session: AsyncSession, data: DeliteCart):
+async def delete_cart(session: AsyncSession, data: DeleteCart):
     result = await session.execute(
         select(Cart).where(Cart.anonymous_id == data.anonymous_id)
     )

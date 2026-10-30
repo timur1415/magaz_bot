@@ -10,5 +10,5 @@ class GetCart(BaseModel):
     anonymous_id: UUID
     user_id: int
 
-class DeliteCart(BaseModel):
+class DeleteCart(BaseModel):
     anonymous_id: UUID
