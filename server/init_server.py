@@ -5,6 +5,7 @@ from fastapi import FastAPI, File, Form, Request, Response, UploadFile, status
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+import httpx
 from telegram import Update
 
 from db.db import init_db
@@ -141,6 +142,8 @@ async def lifespan(app: FastAPI):
     # запуск приложения
     await init_db()
 
+    app.state.http = httpx.AsyncClient(timeout=10)
+
     # bot_app = init_bot()
     # app.state.bot_app = bot_app
     # await bot_app.initialize()
@@ -148,3 +151,4 @@ async def lifespan(app: FastAPI):
     # await bot_app.bot.set_webhook(WEBHOOK_URL + "/telegram")
     yield
     # конец приложения
+    await app.state.http.aclose()

@@ -133,7 +133,15 @@
                 credentials: 'include',
                 body: formData
             });
-            
+            const status = document.getElementById("status");
+            status.textContent = "Создание платежа...";
+            const response = await result.json();
+            if (response.payment_url) {
+                window.location.href = response.payment_url;
+            } else {
+                const status = document.getElementById("status");
+                status.textContent = "Ошибка при создании платежа";
+            }
         });
     </script>
 </body>

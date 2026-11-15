@@ -10,6 +10,7 @@ from db.order_items.shema import OrderItemCreate
 from db.orders.crud import create_order
 from db.orders.shema import OrderCreate
 from server.deps import SessionDep
+from server.routers.payment_router import create_payment
 
 router = APIRouter(prefix="/orders", tags=["orders"])
 
@@ -40,4 +41,5 @@ async def create_order_route(
             ),
         )
     await delete_cart(session, DeleteCart(anonymous_id=uuid.UUID(cart_uuid)))
-    return {"order_id": order.id}
+    payment_url = await create_payment(request)
+    return {"order_id": order.id, "payment_url": payment_url}
