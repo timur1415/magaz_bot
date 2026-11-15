@@ -69,7 +69,7 @@
         .then(r => r.json())
         .then(items => {
             if (!Array.isArray(items) || items.length === 0) {
-                itemsEl.innerHTML = '<p style="color:var(--muted);line-height:1.6">Корзина пуста. <a href="/#pricing" style="color:var(--lilac)">Выбери тариф</a></p>';
+                itemsEl.innerHTML = '<p style="color:var(--muted);line-height:1.6">Корзина пуста. <a href="/products#pricing" style="color:var(--lilac)">Выбери тариф</a></p>';
                 document.getElementById('sumTotal').textContent = '0 ₽';
                 return;
             }

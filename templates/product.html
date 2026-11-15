@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="page">
-    <a href="/#pricing" class="back-link">← Все тарифы</a>
+    <a href="/products#pricing" class="back-link">← Все тарифы</a>
 
     <div id="product-card" class="product-layout">
         <div class="skeleton" style="aspect-ratio:1/1;min-height:0"></div>
@@ -29,7 +29,7 @@
             <div class="empty-state">
                 <strong>Тариф не найден</strong>
                 Возможно, он больше не продаётся. Посмотри актуальные тарифы.
-                <br><a class="btn btn-primary" href="/#pricing">К тарифам</a>
+                <br><a class="btn btn-primary" href="/products#pricing">К тарифам</a>
             </div>`;
     };
 
@@ -64,7 +64,7 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg>
                             Купить за ${formatPrice(p.price)} ₽
                         </button>
-                        <a class="btn btn-ghost" href="/#pricing">Другие тарифы</a>
+                        <a class="btn btn-ghost" href="/products#pricing">Другие тарифы</a>
                     </div>
 
                     <div class="trust-row">
