@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#07030f">
+<title>{% block title %}GLOW VPN — свет в любой сети{% endblock %}</title>
+<meta name="description" content="GLOW VPN — быстрый и приватный VPN. Покупка картой прямо на сайте, без Telegram.">
+<link rel="icon" href="/static/ava.webp">
+<link rel="stylesheet" href="/static/glow.css?v=1">
+{% block head %}{% endblock %}
+</head>
+<body>
+
+{% block loader %}{% endblock %}
+
+<canvas id="fireflies"></canvas>
+<div class="grid-bg"></div>
+
+<header id="header">
+    <a href="/" class="logo">
+        <img src="/static/ava.webp" alt="GLOW VPN">
+        <span>GLOW<b>_</b>VPN</span>
+    </a>
+
+    <nav class="nav" id="nav">
+        <a href="/#features">Преимущества</a>
+        <a href="/#pricing">Тарифы</a>
+        <a href="/#how">Как купить</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/cart" class="{% block nav_cart %}{% endblock %}">Корзина<span class="cart-count" id="cartCount" hidden>0</span></a>
+        <a href="/#pricing" class="nav-cta">Купить VPN</a>
+    </nav>
+
+    <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+</header>
+
+<main id="top">
+{% block content %}{% endblock %}
+</main>
+
+<footer>
+    <div>© <span id="year"></span> GLOW_VPN. Свет в любой сети.</div>
+    <div class="links">
+        <a href="/#pricing">Тарифы</a>
+        <a href="/cart">Корзина</a>
+        <a href="https://t.me/gllow_vpn" target="_blank" rel="noopener">Поддержка: @gllow_vpn</a>
+    </div>
+</footer>
+
+<script src="/static/glow.js?v=1"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

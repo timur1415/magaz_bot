@@ -1,138 +1,64 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Добавить тариф | VOID VPN</title>
+{% extends "base.html" %}
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial,sans-serif;
-        }
+{% block title %}Добавить тариф | GLOW VPN{% endblock %}
 
-        body{
-            background:#1f1f1f;
-            color:white;
-            min-height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-        }
+{% block content %}
+<div class="page" style="max-width:720px">
+    <a href="/#pricing" class="back-link">← К тарифам</a>
+    <h1 class="page-title fade-up">Новый <em>тариф</em></h1>
+    <p class="fade-up d1" style="color:var(--muted);margin:16px 0 30px;line-height:1.7">
+        Тариф сразу появится на главной в блоке «Тарифы».
+    </p>
 
-        .container{
-            width:100%;
-            max-width:500px;
-            padding:40px;
-            border:1px solid rgba(255,255,255,.15);
-            background:#252525;
-            border-radius:15px;
-        }
+    <form id="add-product-form" class="panel form fade-up d2">
+        <label class="field">
+            <span>Название тарифа</span>
+            <input class="input" type="text" name="name" placeholder="Например: Сияние — 3 месяца" required>
+        </label>
+        <label class="field">
+            <span>Цена, ₽</span>
+            <input class="input" type="number" name="price" min="0" step="1" placeholder="357" required>
+        </label>
+        <label class="field">
+            <span>Описание</span>
+            <textarea class="input" name="description" rows="4" placeholder="Что входит в тариф" required></textarea>
+        </label>
+        <label class="field">
+            <span>Картинка тарифа</span>
+            <input class="input" type="file" name="photo" accept="image/*" required>
+        </label>
 
-        h1{
-            text-align:center;
-            margin-bottom:30px;
-            letter-spacing:3px;
-        }
-
-        form{
-            display:flex;
-            flex-direction:column;
-            gap:15px;
-        }
-
-        input{
-            padding:15px;
-            border:none;
-            border-radius:10px;
-            background:#333;
-            color:white;
-            font-size:16px;
-        }
-
-        input::placeholder{
-            color:#aaa;
-        }
-
-        button{
-            padding:15px;
-            border:none;
-            border-radius:10px;
-            background:white;
-            color:black;
-            font-weight:bold;
-            cursor:pointer;
-            transition:.3s;
-        }
-
-        button:hover{
-            opacity:.85;
-        }
-
-        .back{
-            display:block;
-            text-align:center;
-            margin-top:20px;
-            color:white;
-            text-decoration:none;
-        }
-
-        .back:hover{
-            text-decoration:underline;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-
-    <h1>VOID VPN</h1>
-
-    <form action="/create_product" method="post" enctype="multipart/form-data" id="add-product-form">
-
-        <input type="text"
-               name="name"
-               placeholder="Название тарифа"
-               required>
-
-        <input type="number"
-               name="price"
-               placeholder="Цена"
-               required>
-
-        <input type="text"
-               name="description"
-               placeholder="Описание"
-               required>
-
-        <input type="file"
-               name="photo"
-               required>
-
-        <button type="submit">
-            Добавить тариф
-        </button>
-
+        <button class="btn btn-primary" type="submit" id="submitBtn">Добавить тариф</button>
+        <p id="status" class="form-status" role="status"></p>
     </form>
-
-    <a href="/products" class="back">
-        ← Вернуться к тарифам
-    </a>
-
 </div>
-    <script>
-        const form = document.getElementById('add-product-form');
+{% endblock %}
 
-        form.addEventListener('submit', async (event)=>{
-            event.preventDefault();
-            const formData = new FormData(form);
-            const result = await fetch('/api/products',{
-                method:'POST',
-                body: formData
-            })
-        });
-    </script>
-</body>
-</html>
+{% block scripts %}
+<script>
+(() => {
+    const form = document.getElementById('add-product-form');
+    const btn = document.getElementById('submitBtn');
+    const statusEl = document.getElementById('status');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        btn.disabled = true;
+        statusEl.className = 'form-status';
+        statusEl.textContent = 'Сохраняем…';
+        try {
+            const r = await fetch('/api/products', {method: 'POST', body: new FormData(form)});
+            if (!r.ok) throw new Error();
+            const product = await r.json();
+            statusEl.className = 'form-status ok';
+            statusEl.textContent = 'Тариф добавлен ✓';
+            setTimeout(() => { window.location.href = `/product/${product.id}`; }, 700);
+        } catch {
+            statusEl.className = 'form-status error';
+            statusEl.textContent = 'Не удалось сохранить тариф. Проверь поля и попробуй ещё раз.';
+            btn.disabled = false;
+        }
+    });
+})();
+</script>
+{% endblock %}

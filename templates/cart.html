@@ -1,244 +1,109 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Корзина</title>
-    <style>
-        :root {
-            --bg-1: #0f1408;
-            --bg-2: #171f0d;
-            --bg-3: #1f290f;
-            --acid: #c9ff31;
-            --purple: #8d3dff;
-            --purple-soft: #c092ff;
-            --text: #f7ffe8;
-            --muted: #cad7ae;
-            --panel: rgba(16, 22, 12, 0.8);
-            --line: rgba(201, 255, 49, 0.18);
-            --line-strong: rgba(192, 146, 255, 0.4);
-        }
+{% extends "base.html" %}
 
-        * {
-            box-sizing: border-box;
-        }
+{% block title %}Корзина | GLOW VPN{% endblock %}
+{% block nav_cart %}active{% endblock %}
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: "Trebuchet MS", sans-serif;
-            color: var(--text);
-            background:
-                radial-gradient(circle at 10% 15%, rgba(141, 61, 255, .28), transparent 20%),
-                radial-gradient(circle at 82% 18%, rgba(201, 255, 49, .16), transparent 18%),
-                radial-gradient(circle at 50% 85%, rgba(82, 124, 18, .24), transparent 26%),
-                linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 34%, var(--bg-3) 65%, #11170b 100%);
-        }
+{% block content %}
+<div class="page">
+    <a href="/#pricing" class="back-link">← К тарифам</a>
+    <h1 class="page-title fade-up">Твоя <em>корзина</em></h1>
 
-        .container {
-            max-width: 980px;
-            margin: 40px auto;
-            padding: 24px;
-        }
-
-        h1 {
-            margin-bottom: 24px;
-            color: var(--acid);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .cart-list {
-            display: grid;
-            gap: 18px;
-        }
-
-        .cart-item {
-            display: flex;
-            gap: 18px;
-            background: rgba(17, 23, 11, 0.7);
-            border: 1px solid var(--line);
-            border-radius: 16px;
-            padding: 18px;
-            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
-        }
-
-        .cart-item img {
-            width: 140px;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 12px;
-            border: 1px solid var(--line-strong);
-            background: rgba(255,255,255,0.05);
-        }
-
-        .cart-item-info {
-            flex: 1;
-        }
-
-        .cart-item-info h2 {
-            margin: 0 0 10px;
-            font-size: 24px;
-            color: var(--acid);
-        }
-
-        .cart-item-info p {
-            margin: 8px 0;
-            line-height: 1.5;
-            color: var(--text);
-        }
-
-        .empty {
-            background: rgba(17, 23, 11, 0.7);
-            border: 1px solid var(--line);
-            border-radius: 16px;
-            padding: 28px;
-            text-align: center;
-            color: var(--muted);
-        }
-
-        .cart-actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 24px;
-        }
-
-        .cart-actions[hidden] {
-            display: none;
-        }
-
-        .buy-button {
-            display: inline-block;
-            text-align: center;
-            text-decoration: none;
-            border: 0;
-            border-radius: 999px;
-            padding: 14px 32px;
-            background: var(--acid);
-            color: var(--bg-1);
-            font: inherit;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .buy-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(201, 255, 49, 0.24);
-        }
-
-        .buy-button:focus-visible {
-            outline: 2px solid var(--purple-soft);
-            outline-offset: 3px;
-        }
-
-        .clear-button {
-            border: 1px solid var(--purple-soft);
-            border-radius: 999px;
-            padding: 14px 32px;
-            margin-right: 12px;
-            background: transparent;
-            color: var(--purple-soft);
-            font: inherit;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: transform 0.2s ease, background 0.2s ease;
-        }
-
-        .clear-button:hover {
-            transform: translateY(-2px);
-            background: rgba(141, 61, 255, 0.18);
-        }
-
-        @media (max-width: 600px) {
-            .buy-button, .clear-button {
-                width: 100%;
-                margin: 0 0 10px;
-            }
-            .cart-actions {
-                flex-direction: column;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Корзина</h1>
-        <div id="cart" class="cart-list"></div>
-        <div id="cart-actions" class="cart-actions" hidden>
-            <button type="button" class="clear-button" onclick="deleteCart()">Удалить корзину</button>
-            <a class="buy-button" href="/order">Купить</a>
-        </div>
+    <div class="steps-bar fade-up d1">
+        <span class="done"><b>✓</b>Тариф</span>
+        <span class="current"><b>2</b>Корзина</span>
+        <span><b>3</b>Оплата</span>
     </div>
 
-    <script>
-        async function loadCart() {
-            const cartContainer = document.getElementById("cart");
-            const cartActions = document.getElementById("cart-actions");
+    <div class="checkout" id="checkout">
+        <div class="cart-list" id="cart">
+            <div class="skeleton" style="min-height:140px"></div>
+        </div>
 
-            try {
-                const response = await fetch("/api/cart", { credentials: "include" });
-                const items = await response.json();
+        <aside class="panel summary" id="summary" hidden>
+            <h2>Итого</h2>
+            <div class="summary-row"><span>Тарифов</span><span id="sumCount">0</span></div>
+            <div class="summary-row"><span>Трафик</span><span>Безлимит</span></div>
+            <div class="summary-row total"><span>К оплате</span><span id="sumTotal">0 ₽</span></div>
+            <a class="btn btn-primary" href="/order">Перейти к оплате →</a>
+            <button type="button" class="btn btn-danger" id="clearBtn">Очистить корзину</button>
+            <small>🔐 Оплата проходит на защищённой странице платёжного сервиса</small>
+        </aside>
+    </div>
+</div>
+{% endblock %}
 
-                if (!Array.isArray(items) || items.length === 0) {
-                    cartContainer.innerHTML = "<div class='empty'>Корзина пуста</div>";
-                    cartActions.hidden = true;
-                    return;
-                }
+{% block scripts %}
+<script>
+(() => {
+    const {escapeHtml, normalizePhotoPath, formatPrice, toast, updateCartCount, ensureCart} = window.Glow;
+    const cartEl = document.getElementById('cart');
+    const summary = document.getElementById('summary');
 
-                cartActions.hidden = false;
-                cartContainer.innerHTML = items
-                    .map(item => {
-                        const name = item.name ?? "Без названия";
-                        const description = item.description ?? "Описание отсутствует";
-                        const quantity = item.quantity ?? 1;
-                        const price = item.price ?? 0;
-                        const photo = item.photo || "";
+    const renderEmpty = (title, text) => {
+        summary.hidden = true;
+        cartEl.innerHTML = `
+            <div class="empty-state">
+                <strong>${escapeHtml(title)}</strong>
+                ${escapeHtml(text)}
+                <br><a class="btn btn-primary" href="/#pricing">Выбрать тариф</a>
+            </div>`;
+    };
 
-                        return `
-                            <div class="cart-item">
-                                <img src="${photo}" alt="${name}">
-                                <div class="cart-item-info">
-                                    <h2>${name}</h2>
-                                    <p><strong>Описание:</strong> ${description}</p>
-                                    <p><strong>Количество:</strong> ${quantity}</p>
-                                    <p><strong>Цена:</strong> ${price} ₽</p>
-                                </div>
-                            </div>
-                        `;
-                    })
-                    .join("");
+    async function loadCart() {
+        try {
+            await ensureCart();
+            const r = await fetch('/api/cart', {credentials: 'include'});
+            const items = await r.json();
 
-            } catch (error) {
-                cartContainer.innerHTML = "<div class='empty'>Не удалось загрузить корзину</div>";
-                console.error(error);
+            if (!Array.isArray(items) || items.length === 0) {
+                renderEmpty('Корзина пуста', 'Выбери тариф — и он появится здесь.');
+                return;
             }
+
+            let total = 0;
+            cartEl.innerHTML = items.map((item, i) => {
+                const qty = Number(item.quantity) || 1;
+                const price = Number(item.price) || 0;
+                total += price * qty;
+                const photo = normalizePhotoPath(item.photo);
+                return `
+                    <div class="cart-item" style="animation-delay:${i * 80}ms">
+                        ${photo ? `<img src="${escapeHtml(photo)}" alt="" onerror="this.outerHTML='<div class=&quot;thumb-empty&quot;></div>'">` : '<div class="thumb-empty"></div>'}
+                        <div>
+                            <h3>${escapeHtml(item.name || 'Тариф')}</h3>
+                            <p>${escapeHtml(item.description || 'Тариф GLOW VPN')}</p>
+                            ${qty > 1 ? `<p>Количество: ${qty}</p>` : ''}
+                        </div>
+                        <div class="item-price">${formatPrice(price * qty)} ₽</div>
+                    </div>`;
+            }).join('');
+
+            document.getElementById('sumCount').textContent = items.length;
+            document.getElementById('sumTotal').textContent = `${formatPrice(total)} ₽`;
+            summary.hidden = false;
+        } catch (e) {
+            console.error(e);
+            renderEmpty('Не удалось загрузить корзину', 'Обнови страницу и попробуй ещё раз.');
         }
+    }
 
-        async function deleteCart() {
-            if (!confirm("Удалить все товары из корзины?")) return;
-
-            try {
-                const response = await fetch("/api/carts/delete", {
-                    method: "POST",
-                    credentials: "include",
-                });
-                const result = await response.json();
-
-                if (result.error) {
-                    alert("Не удалось удалить корзину: " + result.error);
-                    return;
-                }
-                loadCart();
-            } catch (error) {
-                console.error(error);
-                alert("Ошибка при удалении корзины");
+    document.getElementById('clearBtn').addEventListener('click', async () => {
+        if (!confirm('Очистить корзину?')) return;
+        try {
+            const r = await fetch('/api/carts/delete', {method: 'POST', credentials: 'include'});
+            const result = await r.json();
+            if (result.error) {
+                toast('Не получилось очистить корзину', result.error);
+                return;
             }
+            await loadCart();
+            updateCartCount();
+        } catch {
+            toast('Нет связи с сервером', 'Попробуй ещё раз');
         }
+    });
 
-        loadCart();
-    </script>
-</body>
-</html>
+    loadCart();
+})();
+</script>
+{% endblock %}
