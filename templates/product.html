@@ -529,6 +529,8 @@
             if (result.status === 'success') {
               document.querySelector(".cart").insertAdjacentHTML("beforeend", `<p>Товар с ID: ${productId} успешно добавлен в корзину</p>`);
               window.location = '/cart'
+            } else if (result.status === 'already_in_cart') {
+              showCartToast("В корзине уже есть товар 🛒", "Можно оформить только один товар за раз", "/cart");
             } else {
               console.error(`Ошибка при добавлении товара с ID: ${productId} в корзину`);
             }
@@ -537,8 +539,58 @@
 
 
 
+      function showCartToast(title, text, href) {
+        document.querySelector(".cart-toast")?.remove();
+        const toast = document.createElement("div");
+        toast.className = "cart-toast";
+        toast.innerHTML = `
+          <strong>${title}</strong>
+          <span>${text}</span>
+          <a href="${href}">Перейти в корзину →</a>
+        `;
+        document.body.appendChild(toast);
+        requestAnimationFrame(() => toast.classList.add("show"));
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => toast.remove(), 400);
+        }, 4500);
+      }
+
       fetchProduct(productId);
     </script>
+    <style>
+      .cart-toast {
+        position: fixed;
+        left: 50%;
+        bottom: 32px;
+        transform: translate(-50%, 30px);
+        display: grid;
+        gap: 6px;
+        max-width: 360px;
+        padding: 18px 22px;
+        border-radius: 18px;
+        background: rgba(30, 30, 40, 0.95);
+        color: #fff;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+        opacity: 0;
+        transition: opacity 0.35s ease, transform 0.35s ease;
+        z-index: 1000;
+      }
+      .cart-toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+      .cart-toast span {
+        font-size: 14px;
+        opacity: 0.8;
+      }
+      .cart-toast a {
+        margin-top: 4px;
+        color: #ffb86b;
+        font-weight: 600;
+        text-decoration: none;
+      }
+    </style>
 
   </body>
 </html>

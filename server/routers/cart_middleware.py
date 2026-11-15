@@ -3,7 +3,7 @@ import uuid
 from fastapi import APIRouter, Request, Response
 
 from db.cart_items.crud import cart_item_create
-from db.carts.crud import delete_cart, get_or_create_cart_by_anonymous_id
+from db.carts.crud import delete_cart as delete_cart_db, get_or_create_cart_by_anonymous_id
 from db.carts.schema import DeleteCart
 from server.deps import SessionDep
 
@@ -33,16 +33,12 @@ async def add_to_cart(
         return {"error": "cart_uuid not found"}
 
     cart = await get_or_create_cart_by_anonymous_id(session, uuid.UUID(cart_uuid))
-    print(f'cart {cart} !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 
-    item = await cart_item_create(
-        session,
-        cart.id,
-        product_id,
-    )
-    print(f'item {item.quantity} !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    item = await cart_item_create(session, cart.id, product_id)
+    if item is None:
+        return {"status": "already_in_cart"}
 
-    return {"status": "success", }
+    return {"status": "success"}
 
 @router.post('/api/carts/delete')
 async def delete_cart(
@@ -57,7 +53,7 @@ async def delete_cart(
     data = DeleteCart(
         anonymous_id=uuid.UUID(cart_uuid)
     )
-    cart = await delete_cart(session, data)
+    cart = await delete_cart_db(session, data)
     if not cart:
         return {"error": "cart not found"}
     return {"status": "success"}
