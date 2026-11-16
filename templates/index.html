@@ -93,7 +93,7 @@
     font-size:1.1rem;letter-spacing:.24em;text-transform:uppercase;
     color:var(--lilac);white-space:nowrap;display:flex;align-items:center;gap:48px;
 }
-.marquee-track span::after{content:"✦";color:var(--violet-2);text-shadow:0 0 10px var(--violet)}
+.marquee-track span::after{content:"";width:14px;height:14px;flex-shrink:0;background:linear-gradient(135deg, #fff, var(--violet-2));clip-path:polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);filter:drop-shadow(0 0 6px var(--violet))}
 @keyframes marquee{to{transform:translateX(-50%)}}
 
 /* ---------- фичи ---------- */
@@ -321,9 +321,9 @@
         </div>
 
         <div class="hero-trust fade-up d3">
-            <div>💳 <strong>Оплата картой</strong></div>
-            <div>🔒 <strong>No-logs</strong></div>
-            <div>📱 <strong>iOS · Android · ПК</strong></div>
+            <div><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></svg><strong>Оплата картой</strong></div>
+            <div><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><strong>No-logs</strong></div>
+            <div><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="13" height="10" rx="2"/><path d="M6 18h5"/><rect x="16" y="8" width="6" height="12" rx="1.5"/></svg><strong>iOS · Android · ПК</strong></div>
         </div>
     </div>
 
@@ -428,9 +428,9 @@
     </div>
 
     <div class="pay-methods reveal">
-        <span>💳 Visa / MasterCard / МИР</span>
-        <span>⚡ СБП</span>
-        <span>🔐 Защищённый платёж</span>
+        <span><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></svg>Visa / MasterCard / МИР</span>
+        <span><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg>СБП</span>
+        <span><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Защищённый платёж</span>
     </div>
     <p class="pricing-note reveal">
         Удобнее через мессенджер? Пиши в Telegram <a href="https://t.me/gllow_vpn_bot" target="_blank" rel="noopener">@gllow_vpn_bot</a>.
@@ -506,7 +506,7 @@
     </div>
 </div>
 
-<a class="buy-float" id="tgFloat" href="#pricing">⚡ Купить VPN</a>
+<a class="buy-float" id="tgFloat" href="#pricing"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg>Купить VPN</a>
 
 {% endblock %}
 
