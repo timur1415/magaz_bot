@@ -51,7 +51,7 @@
             if (!r.ok) throw new Error();
             const product = await r.json();
             statusEl.className = 'form-status ok';
-            statusEl.textContent = 'Тариф добавлен ✓';
+            statusEl.textContent = 'Тариф добавлен';
             setTimeout(() => { window.location.href = `/product/${product.id}`; }, 700);
         } catch {
             statusEl.className = 'form-status error';

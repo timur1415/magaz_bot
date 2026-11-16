@@ -413,3 +413,15 @@ footer .links{display:flex;gap:18px;flex-wrap:wrap}
     *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
     .reveal{opacity:1;transform:none}
 }
+
+/* ---------- SVG-иконки вместо эмодзи ---------- */
+.i{
+    width:18px;height:18px;flex-shrink:0;
+    color:var(--lilac);
+    filter:drop-shadow(0 0 6px rgba(167,100,255,.65));
+    vertical-align:-3px;
+}
+.hero-trust div,.trust-row span,.pay-methods span,.secure-note,.summary small,.buy-float{display:inline-flex;align-items:center;gap:8px}
+.summary small{justify-content:center;width:100%}
+.buy-float .i{color:#fff;filter:drop-shadow(0 0 6px rgba(255,255,255,.6))}
+.steps-bar span b svg{width:12px;height:12px}
