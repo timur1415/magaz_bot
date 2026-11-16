@@ -110,14 +110,37 @@
     const burger = document.getElementById('burger');
     const nav = document.getElementById('nav');
     if (burger && nav) {
+        let savedY = 0;
+        burger.setAttribute('aria-expanded', 'false');
+        burger.setAttribute('aria-controls', 'nav');
+
         const toggleMenu = (force) => {
             const open = typeof force === 'boolean' ? force : !nav.classList.contains('open');
+            if (open === nav.classList.contains('open')) return;
+
+            if (open) {
+                /* блокировка прокрутки, которая работает и в iOS Safari */
+                savedY = window.scrollY;
+                document.body.style.top = `-${savedY}px`;
+                document.body.classList.add('menu-open');
+            } else {
+                document.body.classList.remove('menu-open');
+                document.body.style.top = '';
+                window.scrollTo({top: savedY, behavior: 'instant'});
+            }
             nav.classList.toggle('open', open);
             burger.classList.toggle('active', open);
-            document.body.classList.toggle('menu-open', open);
+            burger.setAttribute('aria-expanded', String(open));
+            burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Меню');
         };
+
         burger.addEventListener('click', () => toggleMenu());
         nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+        /* тап по пустому месту меню — закрыть */
+        nav.addEventListener('click', (e) => { if (e.target === nav) toggleMenu(false); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggleMenu(false); });
+        /* повернули телефон / расширили окно до десктопа — закрыть */
+        window.matchMedia('(min-width: 821px)').addEventListener('change', (e) => { if (e.matches) toggleMenu(false); });
     }
 
     /* ---------- появление блоков при скролле ---------- */
