@@ -273,6 +273,84 @@
     .buy-float{left:16px;right:16px;bottom:16px;justify-content:center}
     .marquee-track span{font-size:.9rem}
 }
+
+/* ---------- мобильная полировка главной ---------- */
+@media (max-width:640px){
+    .hero{padding:88px 16px 48px;gap:8px;min-height:auto}
+    .badge{font-size:.66rem;padding:8px 13px;margin-bottom:18px;letter-spacing:.16em}
+    .hero h1{font-size:clamp(2.6rem, 14vw, 3.9rem)}
+    .hero p.lead{margin-top:18px;font-size:.98rem;line-height:1.65}
+    .hero-actions{margin-top:24px;gap:10px}
+    .hero-trust{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:22px}
+    .hero-trust div{
+        flex-direction:column;justify-content:center;text-align:center;gap:6px;
+        padding:12px 6px;border-radius:16px;font-size:.74rem;line-height:1.25;
+        border:1px solid var(--line);background:rgba(16,8,32,.55);
+    }
+    .hero-trust strong{font-weight:600}
+    .hero-visual{width:min(300px, 76vw);margin:34px auto 6px}
+    .status-chip{padding:8px 10px;gap:8px;font-size:.7rem}
+    .status-chip small{font-size:.62rem}
+    .status-chip .ico{width:24px;height:24px;border-radius:8px}
+    .status-chip .ico svg{width:14px;height:14px}
+    .status-chip.c1{left:-8%;top:0}
+    .status-chip.c2{right:-8%;bottom:2%}
+
+    .marquee{padding:13px 0}
+    .marquee-track,.marquee-track span{gap:30px}
+    .marquee-track span{font-size:.78rem;letter-spacing:.2em}
+
+    /* преимущества: компактные строки «иконка + текст» */
+    .features{gap:12px}
+    .feature{display:grid;grid-template-columns:46px 1fr;column-gap:14px;padding:18px;border-radius:22px}
+    .feature .f-ico{grid-row:span 2;width:46px;height:46px;border-radius:14px;margin:0}
+    .feature .f-ico svg{width:22px;height:22px}
+    .feature h3{font-size:1.05rem;margin:2px 0 6px}
+    .feature p{font-size:.9rem;line-height:1.55}
+    .feature.wide{display:block;position:relative}
+    .feature.wide .wide-text{display:grid;grid-template-columns:46px 1fr;column-gap:14px;align-items:center}
+    .feature.wide .wide-text h3{padding-right:76px;margin:0}
+    .feature.wide .wide-text p{grid-column:1/-1;margin-top:12px}
+    .speed-meter{position:absolute;top:12px;right:12px;width:72px;height:72px}
+    .speed-meter .val strong{font-size:1rem !important}
+    .speed-meter .val small{font-size:.48rem !important}
+    .speed-meter .val strong{font-size:1.25rem}
+    .speed-meter .val small{font-size:.55rem;letter-spacing:.08em}
+    .stats{gap:10px;margin-top:12px}
+    .stat{padding:16px 8px;border-radius:18px}
+    .stat strong{font-size:1.7rem}
+    .stat small{font-size:.78rem}
+
+    .pay-methods{gap:8px;margin-top:20px}
+    .pay-methods span{font-size:.74rem;padding:7px 12px;letter-spacing:.04em}
+    .pricing-note{margin-top:18px;font-size:.88rem}
+
+    /* шаги: номер слева, текст справа */
+    .steps{gap:12px}
+    .step{display:grid;grid-template-columns:44px 1fr;column-gap:14px;padding:18px;border-radius:22px}
+    .step .num{grid-row:span 2;width:44px;height:44px;font-size:1.05rem;margin:0}
+    .step h3{font-size:1.05rem;margin:2px 0 6px}
+    .step p{font-size:.9rem;line-height:1.55}
+
+    .faq{gap:10px}
+    .faq-item{border-radius:18px}
+    .faq-q{padding:17px 18px;font-size:.98rem}
+    .faq-q .plus{flex-basis:28px;height:28px}
+    .faq-a p{padding:0 18px 18px;font-size:.92rem}
+
+    .cta{margin:0 16px 64px;padding:40px 20px;border-radius:28px}
+    .cta-img{width:92px;height:92px;margin-bottom:20px}
+    .cta h2{font-size:2.1rem}
+    .cta p{margin:14px auto 24px;font-size:.95rem}
+    .cta-actions{gap:10px}
+
+    .buy-float{bottom:calc(14px + env(safe-area-inset-bottom));padding:15px 20px}
+}
+@media (max-width:360px){
+    .hero{padding-left:12px;padding-right:12px}
+    .hero-trust div{font-size:.68rem}
+    .cta{margin-left:12px;margin-right:12px}
+}
 </style>
 {% endblock %}
 
@@ -323,7 +401,7 @@
         <div class="hero-trust fade-up d3">
             <div><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></svg><strong>Оплата картой</strong></div>
             <div><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><strong>No-logs</strong></div>
-            <div><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="13" height="10" rx="2"/><path d="M6 18h5"/><rect x="16" y="8" width="6" height="12" rx="1.5"/></svg><strong>iOS · Android · ПК</strong></div>
+            <div><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="13" height="10" rx="2"/><path d="M6 18h5"/><rect x="16" y="8" width="6" height="12" rx="1.5"/></svg><strong>Все устройства</strong></div>
         </div>
     </div>
 
