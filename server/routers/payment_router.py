@@ -6,12 +6,13 @@ router = APIRouter(prefix="/payments", tags=["payments"])
 
 
 @router.post("/create")
-async def create_payment(request: Request):
+async def create_payment(request: Request, product_id):
     payment = await request.app.state.http.post(
         "https://gate.lava.top/api/v3/invoice",
         headers={"Content-Type": "application/json", "X-Api-Key": LAVA_API_KEY},
-        json={"email": "example@example.com", "offerId": OFFER_ID, "currency": "RUB"},
+        json={"email": "example@example.com", "offerId": OFFER_ID, "currency": "RUB", "productId": product_id},
     )
+    
 
     payment.raise_for_status()
     invoice = payment.json()

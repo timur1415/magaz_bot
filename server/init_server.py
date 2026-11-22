@@ -28,7 +28,12 @@ def init_server():
 
     @app.get("/")
     async def read_root(request: Request):
-        return JSONResponse({"message": "OK"})
+        products = await get_all_products()
+        return templates.TemplateResponse(
+                request,
+                "index.html",
+                {"request": request, "products": products},
+                )
 
     @app.post("/telegram")
     async def get_update(request: Request):

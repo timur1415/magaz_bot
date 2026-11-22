@@ -31,15 +31,15 @@ async def create_order_route(
         session,
         OrderCreate(anonymous_id=uuid.UUID(cart_uuid), phone=phone, address=address),
     )
-    for row in rows:
-        await create_order_item(
+    product_id = rows[0].product_id
+    await create_order_item(
             session,
             OrderItemCreate(
                 order_id=order.id,
-                product_id=row.product_id,
-                quantity=row.quantity,
+                product_id=product_id,
+                quantity=1
             ),
         )
     await delete_cart(session, DeleteCart(anonymous_id=uuid.UUID(cart_uuid)))
-    payment_url = await create_payment(request)
+    payment_url = await create_payment(request, product_id)
     return {"order_id": order.id, "payment_url": payment_url}

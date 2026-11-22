@@ -2,4 +2,4 @@ runserver:
 	uvicorn main:app --reload
 
 tunnel:
-	piperswe-cloudflared.cloudflared --url http://localhost:8000
+	ssh -p 2222 -R app:80:localhost:8000 timur@tun.romanenko-dev.ru
