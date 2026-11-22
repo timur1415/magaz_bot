@@ -1,7 +1,7 @@
 import shutil
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, File, Form, Request, Response, UploadFile, status
+from fastapi import Depends, FastAPI, File, Form, Request, Response, UploadFile, status
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -10,6 +10,7 @@ from telegram import Update
 
 from db.db import init_db
 from db.product_crud import create_product, get_all_products
+from server.routers.admin import is_admin, require_admin, router as admin_router
 from server.routers.cart_middleware import router as cart_middleware_router
 from server.routers.carts import router as carts_router
 from server.routers.order_router import router as order_router
@@ -24,6 +25,7 @@ def init_server():
     app.include_router(carts_router)
     app.include_router(cart_middleware_router)
     app.include_router(order_router, prefix="/api")
+    app.include_router(admin_router)
     
 
     @app.get("/")
@@ -57,7 +59,7 @@ def init_server():
             "index.html",
             {"request": request, "products": products},
         )
-    @app.post("/create_product")
+    @app.post("/create_product", dependencies=[Depends(require_admin)])
     async def create_product_view(
         request: Request,
         title: str = Form(...),
@@ -87,6 +89,8 @@ def init_server():
 
     @app.get("/add_product")
     async def add_product(request: Request):
+        if not is_admin(request):
+            return RedirectResponse("/admin", 303)
         return templates.TemplateResponse(
             request,
             "add_product.html",

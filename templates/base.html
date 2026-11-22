@@ -7,7 +7,7 @@
 <title>{% block title %}GLOW VPN — свет в любой сети{% endblock %}</title>
 <meta name="description" content="GLOW VPN — быстрый и приватный VPN. Покупка картой прямо на сайте, без Telegram.">
 <link rel="icon" href="/static/ava.webp">
-<link rel="stylesheet" href="/static/glow.css?v=6">
+<link rel="stylesheet" href="/static/glow.css?v=8">
 {% block head %}{% endblock %}
 </head>
 <body>
@@ -29,6 +29,7 @@
         <a href="/products#how">Как купить</a>
         <a href="/products#faq">FAQ</a>
         <a href="/cart" class="{% block nav_cart %}{% endblock %}">Корзина<span class="cart-count" id="cartCount" hidden>0</span></a>
+        <a href="/add_product" class="admin-only nav-admin">+ Тариф</a>
         <a href="/products#pricing" class="nav-cta">Купить VPN</a>
     </nav>
 
@@ -48,7 +49,7 @@
     </div>
 </footer>
 
-<script src="/static/glow.js?v=2"></script>
+<script src="/static/glow.js?v=3"></script>
 {% block scripts %}{% endblock %}
 </body>
 </html>

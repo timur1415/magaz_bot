@@ -2,12 +2,13 @@
 import uuid
 from pathlib import Path
 
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 
 from config.logger import logger
 from db.products.crud import create, get_all, get_by_id
 from db.products.schema import ProductCreate, ProductRead
 from server.deps import SessionDep
+from server.routers.admin import require_admin
 
 UPLOADS_DIR = Path("static/uploads")
 UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
@@ -21,7 +22,7 @@ async def get_products(session: SessionDep) -> list[ProductRead]:
     products = await get_all(session)
     return products
 
-@router.post("")
+@router.post("", dependencies=[Depends(require_admin)])
 async def create_product(
     session: SessionDep,
     name: str = Form(...),

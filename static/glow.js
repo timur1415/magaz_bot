@@ -203,4 +203,10 @@
     }
 
     ensureCart().then(updateCartCount);
+
+    /* админ: показываем элементы .admin-only (сервер всё равно проверяет права сам) */
+    fetch('/api/admin/me', {credentials: 'include'})
+        .then(r => r.ok ? r.json() : null)
+        .then(d => { if (d && d.is_admin) document.body.classList.add('is-admin'); })
+        .catch(() => {});
 })();
